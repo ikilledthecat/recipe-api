@@ -7,10 +7,12 @@ MAINTAINER "Prasanjit Prakash"
 ENV PYTHONUNBUFFERED 1 
 
 COPY ./requirements.txt /requirements.txt
+COPY pytest.ini /pytest.ini
 
 RUN pip install -r /requirements.txt
 
 RUN mkdir /app
+RUN mkdir /.pytest_cache
 WORKDIR /app
 COPY ./api /app
 
@@ -18,4 +20,5 @@ COPY ./api /app
 # if someone compromises the application
 # they have complete access to our container
 RUN adduser -D www
+RUN chown -R www /.pytest_cache
 USER www
