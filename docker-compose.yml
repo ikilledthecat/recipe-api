@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  app:
+    build:
+      # set the context of the build to the curretn directory
+      # that is it tell docker compose to look for dockerfile
+      # in the current directory and set all operations
+      # within docker file in tje context of the current directory
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # allows you to get changes from fs to container
+      # this means you don't need to restart container
+      - ./api:/app
+    # command to run the application
+    # this command runs the development
+    # server
+    command: >
+      python manage.py runserver 0.0.0.0:8000
