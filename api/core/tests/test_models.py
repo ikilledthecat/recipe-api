@@ -75,3 +75,15 @@ def test_ingredients_str():
     )
 
     assert str(tag) == '<Ingredient: Vegan>'
+
+
+def test_recipe_str():
+    """Test the recipe string representation"""
+    tag = models.Recipe.objects.create(
+        user=sample_user(),
+        name='Steak and Mushroom Sauce',
+        time_minutes=5,
+        price=5.00
+    )
+
+    assert str(tag) == '<Recipe: Steak and Mushroom Sauce>'
