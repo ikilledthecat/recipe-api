@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 @pytest.fixture
-def admin_user(client):
+def admin_user(client, db):
     admin_user = get_user_model().objects.create_superuser(
         email='admin@example.com',
         password='password',
@@ -14,7 +14,7 @@ def admin_user(client):
 
 
 @pytest.fixture
-def user():
+def user(db):
     return get_user_model().objects.create_superuser(
         email='user@example.com',
         password='password',

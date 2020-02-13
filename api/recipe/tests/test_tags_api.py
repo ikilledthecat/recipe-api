@@ -77,7 +77,7 @@ def test_create_tag_successful(client, user):
     payload = {'name': 'Vietnamese'}
     client.force_authenticate(user=user)
     client.post(TAGS_URL, payload)
-    exists = Tag.objects.filter(name=payload['name'], user=user).exists() 
+    exists = Tag.objects.filter(name=payload['name'], user=user).exists()
     assert exists
 
 
@@ -86,5 +86,5 @@ def test_create_tag_unsuccessful(client, user):
     payload = {'name': ''}
     client.force_authenticate(user=user)
     client.post(TAGS_URL, payload)
-    exists = Tag.objects.filter(name=payload['name'], user=user).exists() 
+    exists = Tag.objects.filter(name=payload['name'], user=user).exists()
     assert not exists

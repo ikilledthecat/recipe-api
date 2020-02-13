@@ -65,3 +65,13 @@ def test_tag_str():
     )
 
     assert str(tag) == '<Tag: Vegan>'
+
+
+def test_ingredients_str():
+    """Test the tag string representation"""
+    tag = models.Ingredient.objects.create(
+        user=sample_user(),
+        name='Vegan'
+    )
+
+    assert str(tag) == '<Ingredient: Vegan>'
