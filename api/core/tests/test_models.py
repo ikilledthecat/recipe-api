@@ -1,8 +1,15 @@
 import pytest
 from django.contrib.auth import get_user_model
+from core import models
 
 
 pytestmark = pytest.mark.django_db
+
+
+def sample_user(email='test@gmail.com', password='password', name='test user'):
+    return get_user_model().objects.create_user(
+        email=email, password=password, name=name
+    )
 
 
 def test_create_user_with_email_success():
@@ -48,3 +55,13 @@ def test_create_new_superuser():
     )
     assert user.is_superuser
     assert user.is_staff
+
+
+def test_tag_str():
+    """Test the tag string representation"""
+    tag = models.Tag.objects.create(
+        user=sample_user(),
+        name='Vegan'
+    )
+
+    assert str(tag) == '<Tag: Vegan>'
