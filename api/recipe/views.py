@@ -2,9 +2,12 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Tag, Ingredient
+from core.models import Tag, Ingredient, Recipe
 
-from recipe.serializers import TagSerializer, IngredientSerializer
+from recipe.serializers import (
+    TagSerializer, IngredientSerializer, RecipeSerializer,
+    RecipeDetailSerializer
+)
 
 
 class ListAPIViewSet(
@@ -43,3 +46,15 @@ class IngredientViewSet(BaseSecurity, DefaultUserQuerySet, ListAPIViewSet):
     """Manage Tags in database"""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+
+class RecipeViewSet(BaseSecurity, DefaultUserQuerySet, viewsets.ModelViewSet):
+    """Manage Tags in database"""
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+
+    def get_serializer_class(self):
+        """Return apropriate serializer class"""
+        if self.action == 'retrieve':
+            return RecipeDetailSerializer
+        return RecipeSerializer
