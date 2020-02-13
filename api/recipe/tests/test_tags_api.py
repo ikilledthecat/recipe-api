@@ -70,3 +70,21 @@ def test_tags_list_view_limited_user(client, user):
     serializer = TagSerializer(tags, many=True)
     assert res.status_code == status.HTTP_200_OK
     assert res.data == serializer.data
+
+
+def test_create_tag_successful(client, user):
+    """Test tags api creates new tags in the database"""
+    payload = {'name': 'Vietnamese'}
+    client.force_authenticate(user=user)
+    client.post(TAGS_URL, payload)
+    exists = Tag.objects.filter(name=payload['name'], user=user).exists() 
+    assert exists
+
+
+def test_create_tag_unsuccessful(client, user):
+    """Test tags api fails to create new tag with invalid name"""
+    payload = {'name': ''}
+    client.force_authenticate(user=user)
+    client.post(TAGS_URL, payload)
+    exists = Tag.objects.filter(name=payload['name'], user=user).exists() 
+    assert not exists
